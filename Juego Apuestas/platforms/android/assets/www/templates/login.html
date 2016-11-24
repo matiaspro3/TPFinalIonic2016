@@ -1,0 +1,25 @@
+<ion-view view-title="Registrate para disfrutar de los juegos!" ng-init="fAdmi = 'img/homerlike.png'"  ng-style={'background-color':'black'} >
+  <ion-content class="padding">
+	<label class="item item-input">
+	  <span class="input-label">Nombre:</span>
+	  <input type="text" ng-model="usuario.nombre">
+	</label>
+	<br>
+	<ion-button class="button button-full button-positive" ng-click="login()">
+	Loguiate para jugar!
+	</ion-button>
+
+
+  <div class="button-bar" ng-model=usuario.nombre>
+<button class="button button-icon icon ion-magnet"  ng-show=usuario.nombre  style="color:lightblue" nav-clear menu-close nav-direction="exit" ui-sref="app.gallery">Menu</button>
+ <button class="button button-icon icon ion-home"  style="color:blue" nav-clear menu-close nav-direction="exit" ui-sref="home">Inicio</button>
+ <button class="button button-icon icon ion-log-out" style="color: coral" on-tap="exitApp()">Salir</button>
+ </div>
+
+
+
+  </ion-content>
+</ion-view>
+
+
+

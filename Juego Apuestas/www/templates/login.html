@@ -1,0 +1,54 @@
+<ion-view view-title="Registrate para disfrutar de los juegos!" ng-init="fAdmi = 'img/homerlike.png'"  ng-style={'background-color':'black'} >
+  <ion-content class="padding">
+
+<div class="list" ng-if="logueado == 'no'">
+        <label class="item item-input">
+          <span class="input-label">Correo</span>
+          <input type="text" ng-model='login.usuario'>
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Contraseña</span>
+          <input type="password" ng-model="login.clave">
+        </label>
+        <br>
+        <div class="padding">
+	        <ion-button class="button button-full button-positive" ng-click="login()">
+			Loguiate para jugar!
+			</ion-button>
+          <p class="text-center text-muted">
+            <small><a ng-click="Resetear()">Olvide mi contraseña</a></small>
+          </p>
+          <p class="text-center text-muted">
+            <small>No tienes una cuenta? <a ui-sref="registro">Registrate</a></small>
+          </p>
+        </div>
+        <div class="padding">
+          <div class="{{mensajeLogin.estilo}}" ng-if="mensajeLogin.ver" style="text-align:center">
+            <span class="input-label" style="font-size: 16px; width: 100%; max-width: 100%;">{{mensajeLogin.mensaje}}</span>
+          </div>
+        </div>
+      </div>
+
+
+
+      <div class="list" ng-if="logueado == 'si'">
+        <div class="padding">
+             
+          <button class="button button-block button-positive" ng-click="Deslogear()" >Salir</button>
+        </div>
+      </div>
+
+
+  <div class="button-bar" ng-model=login.usuario>
+<button class="button button-icon icon ion-magnet"  ng-show=login.usuario  style="color:lightblue" nav-clear menu-close nav-direction="exit" ui-sref="app.gallery">Menu</button>
+ <button class="button button-icon icon ion-home"  style="color:blue" nav-clear menu-close nav-direction="exit" ui-sref="home">Inicio</button>
+ <button class="button button-icon icon ion-log-out" style="color: coral" on-tap="exitApp()">Salir</button>
+ </div>
+
+
+
+  </ion-content>
+</ion-view>
+
+
+

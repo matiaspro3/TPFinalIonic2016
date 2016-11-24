@@ -1,0 +1,46 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {}
+    },
+    "installed_plugins": {
+        "cordova-plugin-console": {
+            "PACKAGE_NAME": "com.nicholls.ionicstartertemplate"
+        },
+        "cordova-plugin-device": {
+            "PACKAGE_NAME": "com.nicholls.ionicstartertemplate"
+        },
+        "cordova-plugin-nativeaudio": {
+            "PACKAGE_NAME": "com.nicholls.ionicstartertemplate"
+        },
+        "cordova-plugin-splashscreen": {
+            "PACKAGE_NAME": "com.nicholls.ionicstartertemplate"
+        },
+        "cordova-plugin-statusbar": {
+            "PACKAGE_NAME": "com.nicholls.ionicstartertemplate"
+        },
+        "cordova-plugin-vibration": {
+            "PACKAGE_NAME": "com.nicholls.ionicstartertemplate"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "com.nicholls.ionicstartertemplate"
+        },
+        "cordova-sqlite-ext": {
+            "PACKAGE_NAME": "com.nicholls.ionicstartertemplate"
+        },
+        "ionic-plugin-keyboard": {
+            "PACKAGE_NAME": "com.nicholls.ionicstartertemplate"
+        },
+        "cordova-plugin-file": {
+            "PACKAGE_NAME": "com.nicholls.ionicstartertemplate"
+        }
+    },
+    "dependent_plugins": {
+        "cordova-plugin-compat": {
+            "PACKAGE_NAME": "com.nicholls.ionicstartertemplate"
+        }
+    }
+}
