@@ -4,22 +4,20 @@
 <div class="list" ng-if="logueado == 'no'">
         <label class="item item-input">
           <span class="input-label">Correo</span>
-          <input type="text" ng-model='login.usuario'>
+          <input type="text" ng-model='usuario.email'>
         </label>
         <label class="item item-input">
           <span class="input-label">Contraseña</span>
-          <input type="password" ng-model="login.clave">
+          <input type="password" ng-model="usuario.pass">
         </label>
         <br>
         <div class="padding">
-	        <ion-button class="button button-full button-positive" ng-click="login()">
+	        <ion-button ng-show=usuario.email class="button button-full button-positive" ng-click="login()">
 			Loguiate para jugar!
 			</ion-button>
+      
           <p class="text-center text-muted">
-            <small><a ng-click="Resetear()">Olvide mi contraseña</a></small>
-          </p>
-          <p class="text-center text-muted">
-            <small>No tienes una cuenta? <a ui-sref="registro">Registrate</a></small>
+            <small><a ui-sref="registro()">Registrate</a></small>
           </p>
         </div>
         <div class="padding">
@@ -34,13 +32,13 @@
       <div class="list" ng-if="logueado == 'si'">
         <div class="padding">
              
-          <button class="button button-block button-positive" ng-click="Deslogear()" >Salir</button>
+          <button class="button button-block button-positive" ng-click="Deslogear()" >Desloguearse</button>
         </div>
       </div>
 
 
-  <div class="button-bar" ng-model=login.usuario>
-<button class="button button-icon icon ion-magnet"  ng-show=login.usuario  style="color:lightblue" nav-clear menu-close nav-direction="exit" ui-sref="app.gallery">Menu</button>
+  <div class="button-bar" ng-model=usuario.email>
+<button class="button button-icon icon ion-magnet"  ng-show=usuario.email style="color:lightblue" nav-clear menu-close nav-direction="exit" ui-sref="app.gallery">Menu</button>
  <button class="button button-icon icon ion-home"  style="color:blue" nav-clear menu-close nav-direction="exit" ui-sref="home">Inicio</button>
  <button class="button button-icon icon ion-log-out" style="color: coral" on-tap="exitApp()">Salir</button>
  </div>
