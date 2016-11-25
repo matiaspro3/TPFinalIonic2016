@@ -9,7 +9,6 @@ angular.module('App.controladorUser', [])
     $scope.mensajeLogin = {};
   $scope.mensajeLogin.ver = false;
   
-console.info("isjasj...",factoryUsuario.Logueado);
 
 if (!factoryUsuario.Logueado)
       $scope.logueado = 'no';
@@ -17,9 +16,11 @@ if (!factoryUsuario.Logueado)
 
 
   $scope.login = function() {
+     $scope.cargando = true;
         var corte = $scope.usuario.email.indexOf('@');
         var nombre= $scope.usuario.email.substring(0,corte);
-
+        
+$scope.usuario.nombre= nombre;
 
     $scope.errorLogin = {};
     $scope.errorLogin.ver = false;
@@ -28,6 +29,27 @@ if (!factoryUsuario.Logueado)
 
 $timeout(function() {
       var user = firebase.auth().currentUser;
+
+  /* var perfil ='/usuario/' + user.displayName + '/perfil';
+   var saldo ='/usuario/' + user.displayName + '/saldo';
+
+    $scope.usuario.perfil=ServicioFirebase.Buscar(perfil);
+  $scope.usuario.saldo=ServicioFirebase.Buscar(saldo);
+
+*/
+ServicioFirebase.CargarDatos('/usuario/')
+.on('child_added',function(snapshot)
+      {   
+        
+            if(snapshot.val().nombre == user.displayName)
+               {
+                 $scope.usuario.perfil=snapshot.val().perfil;
+                    $scope.usuario.saldo=snapshot.val().saldo;
+              }
+
+
+
+});
 
 /*
         var corte = $scope.login.usuario.indexOf('@');
@@ -40,7 +62,10 @@ $timeout(function() {
     }, function(error) {
 
     });
+
 */
+  
+
         var updates = {};
       updates['/usuario/' + user.displayName + '/fechaAcceso'] = firebase.database.ServerValue.TIMESTAMP;
       ServicioFirebase.Editar(updates);
@@ -49,7 +74,11 @@ $timeout(function() {
         $scope.logueado = 'si';
 
       factoryUsuario.Logueado=$scope.usuario;
+
           console.info("factory",factoryUsuario);
+
+
+
           $scope.showAlert("BIENVENIDO " +  nombre + "!" + "   "+"Elije el juego");
         $state.go('app.gallery');
   
@@ -63,12 +92,15 @@ $timeout(function() {
             case "auth/user-not-found":
             case "auth/wrong-password":
             case "auth/invalid-email":
-                $scope.errorLogin.mensaje = "Correo o contraseña incorrectos.";
+                $scope.errorLogin.mensaje = "Correo o contraseña incorrectos. Revise o registrese";
                 $scope.errorLogin.ver = true;
-              break;
-
+                 break;
+  
           }
-          console.info(error.code);
+         $scope.showAlert($scope.errorLogin.mensaje);
+         $scope.cargando = false;
+       
+        
         });
     });
   };
@@ -95,6 +127,7 @@ $timeout(function() {
         });
       });
       console.log("Deslogueo");
+          $scope.cargando = false;
    
     }
     catch (error)
@@ -145,20 +178,28 @@ console.info("isjasj...",factoryUsuario.Logueado);
 
 
 .controller('RegistroCtrl', function($scope, $stateParams, $timeout, $state,$ionicPopup, factoryUsuario,ServicioFirebase) {
-  $scope.usuario = {};
-  $scope.usuario.email = "algo1@gmail.com";
-  $scope.usuario.pass = '123456';
+   $scope.usuario = {};
+  
 
+$scope.Test=function()
+{
+$scope.usuario.email = "algo1@gmail.com";
+$scope.usuario.pass = '123456';
+};
 
-        var corte = $scope.usuario.email.indexOf('@');
-        var nombre= $scope.usuario.email.substring(0,corte);
-  $scope.usuario.nombre = nombre;
   $scope.mensajeLogin = {};
 
   $scope.Registrar = function (){
     $scope.mensajeLogin.ver = false;
+      $scope.cargando = true;
     try
     {
+
+       var corte = $scope.usuario.email.indexOf('@');
+        var nombre= $scope.usuario.email.substring(0,corte);
+  $scope.usuario.nombre = nombre;
+
+
     firebase.auth().createUserWithEmailAndPassword($scope.usuario.email, $scope.usuario.pass)
     .then(function(resultado){
       var fecha = firebase.database.ServerValue.TIMESTAMP;
@@ -179,21 +220,18 @@ console.info("isjasj...",factoryUsuario.Logueado);
             displayName: $scope.usuario.nombre,
           }).then(function() {  
 
-
-    factoryUsuario.Logueado=$scope.usuario;
-   console.info("regfis....",factoryUsuario.Logueado);
-
           }, function(error) {
             // An error happened.
           });
         });
 
+
   var alertPopup = $ionicPopup.alert({
-         title: 'REGISTRADO'
+         title: 'REGISTRADO Correctamente.Inicia Sesion Para confirmar Email'
       });
       alertPopup.then(function(res) {
-
-         $state.go('app.gallery');
+ factoryUsuario.Logueado=$scope.usuario;
+         $state.go('Login');
       });
 
  
@@ -207,9 +245,18 @@ console.info("isjasj...",factoryUsuario.Logueado);
                   $scope.mensajeLogin.mensaje = "El correo ya esta registrado.";
                   $scope.mensajeLogin.ver = true;
                   $scope.mensajeLogin.estilo = "alert-danger";
+                    $scope.cargando = false;
                 break;
 
             }
+            var alertPopup = $ionicPopup.alert({
+         title: $scope.mensajeLogin.mensaje
+      });
+
+      alertPopup.then(function(res) {
+ 
+         $scope.cargando = false;
+      });
             console.info(error.code);
           });
       });
@@ -220,6 +267,13 @@ console.info("isjasj...",factoryUsuario.Logueado);
       $scope.mensajeLogin.ver = true;
       $scope.mensajeLogin.estilo = "alert-danger";
       console.info("Ha ocurrido un error en Registrar(). " + error);
+       var alertPopup = $ionicPopup.alert({
+         title: $scope.mensajeLogin.mensaje
+      });
+      alertPopup.then(function(res) { 
+          $scope.cargando = false;
+      });
     }
+
   };
 })

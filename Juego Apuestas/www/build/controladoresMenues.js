@@ -189,8 +189,11 @@ $scope.juegos= [
         .module('App')
         .controller('GalleryController', GalleryController);
 
-    GalleryController.$inject = ['$scope', '$state'];
-    function GalleryController($scope, $state) {
+    GalleryController.$inject = ['$scope', '$state','factoryUsuario'];
+    function GalleryController($scope, $state,factoryUsuario) {
+
+            $scope.conectado=factoryUsuario.Logueado;
+
         //itemmm
         $scope.openItem = function(item){
             //$state.go('app.item', { title: item.title, icon: item.icon, color: item.color });

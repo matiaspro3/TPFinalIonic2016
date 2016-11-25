@@ -3,7 +3,14 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'App' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('App', ['ionic','firebase','App.controladorUser','App.factoryUsuario', 'App.servicioFirebase','ngCordova', 'ngAnimate'])
+angular.module('App', ['ionic',
+	'firebase',
+	'App.ApuestasCtrl',
+	'App.controladorUser',
+	'App.factoryUsuario', 
+	'App.servicioFirebase',
+	'ngCordova', 
+	'ngAnimate'])
 
 .run(['$ionicPlatform', 
 			'$sqliteService',
@@ -61,6 +68,7 @@ angular.module('App', ['ionic','firebase','App.controladorUser','App.factoryUsua
                 }
             }
         })
+
 //***********************************************************************************************************************
 	.state('Login', {
 	            url: "/login",
@@ -106,6 +114,15 @@ angular.module('App', ['ionic','firebase','App.controladorUser','App.factoryUsua
 
 
 
+
+	.state('app.apostar', {
+	            url: "/apostar", 
+	            cache: false,
+            views: {
+                viewContent: {
+	            templateUrl: "templates/apostar.html",
+	            controller: 'controlApuesta'
+	        }}})
 
 
 

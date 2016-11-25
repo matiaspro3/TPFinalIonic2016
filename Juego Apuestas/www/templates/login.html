@@ -1,4 +1,4 @@
-<ion-view view-title="Registrate para disfrutar de los juegos!" ng-init="fAdmi = 'img/homerlike.png'"  ng-style={'background-color':'black'} >
+<ion-view view-title="Inicia sesion disfrutar de los juegos!" ng-init="fAdmi = 'img/homerlike.png'"  ng-style={'background-color':'black'} >
   <ion-content class="padding">
 
 <div class="list" ng-if="logueado == 'no'">
@@ -11,7 +11,7 @@
           <input type="password" ng-model="usuario.pass">
         </label>
         <br>
-        <div class="padding">
+        <div class="padding" ng-show="!cargando">
 	        <ion-button ng-show=usuario.email class="button button-full button-positive" ng-click="login()">
 			Loguiate para jugar!
 			</ion-button>
@@ -20,12 +20,22 @@
             <small><a ui-sref="registro()">Registrate</a></small>
           </p>
         </div>
+<div class="padding">
+ <div class="overlay" style="text-align :center; color: red;" ng-show="cargando" >
+      <div class="overlayContent">
+        <ion-spinner icon="circles"></ion-spinner><span style="font-size:36px; color:red">Ingresando..</span>
+      </div>
+    </div>
+</div >
+
+
         <div class="padding">
           <div class="{{mensajeLogin.estilo}}" ng-if="mensajeLogin.ver" style="text-align:center">
             <span class="input-label" style="font-size: 16px; width: 100%; max-width: 100%;">{{mensajeLogin.mensaje}}</span>
           </div>
         </div>
       </div>
+
 
 
 
@@ -37,12 +47,19 @@
       </div>
 
 
+
+
+
+   <!--
   <div class="button-bar" ng-model=usuario.email>
+ 
 <button class="button button-icon icon ion-magnet"  ng-show=usuario.email style="color:lightblue" nav-clear menu-close nav-direction="exit" ui-sref="app.gallery">Menu</button>
+ </div>
+--><div class="button-bar">
  <button class="button button-icon icon ion-home"  style="color:blue" nav-clear menu-close nav-direction="exit" ui-sref="home">Inicio</button>
  <button class="button button-icon icon ion-log-out" style="color: coral" on-tap="exitApp()">Salir</button>
- </div>
 
+ </div>
 
 
   </ion-content>

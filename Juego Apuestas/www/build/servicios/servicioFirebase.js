@@ -5,6 +5,8 @@ angular.module('App.servicioFirebase', [])
     this.Buscar = Buscar;
     this.Editar = Editar;
     this.Cargar = Cargar;
+    this.EditarUser=EditarUser;
+    this.CargarDatos=CargarDatos;
 
     function Guardar(ruta, objeto){
       return firebase.database().ref(ruta).set(objeto);
@@ -13,7 +15,9 @@ angular.module('App.servicioFirebase', [])
     function Editar(objeto){
       return firebase.database().ref().update(objeto);
     }
-
+function EditarUser(ruta,objeto){
+      return firebase.database().ref(ruta).update(objeto);
+    }
     function Buscar(ruta){
       var datos = [];
       var referencia = firebase.database().ref(ruta);
@@ -32,5 +36,17 @@ angular.module('App.servicioFirebase', [])
         return snapshot.val();
       });
     }
+
+
+    function CargarDatos(ruta){
+      
+        return firebase.database().ref(ruta);
+          
+    
+    }
+
+
+
+
 
   })//Cierra Servicio
