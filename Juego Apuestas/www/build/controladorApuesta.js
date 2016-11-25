@@ -1,6 +1,6 @@
 angular.module('App.ApuestasCtrl', [])
 
-.controller('controlApuesta', function($scope, $stateParams, $timeout, $state, ServicioFirebase,factoryUsuario) {
+.controller('controlApuesta', function($scope, $stateParams, $timeout, $state, ServicioFirebase,factoryUsuario,factoryApuestas) {
     $scope.desafio = {};
 
  $scope.usuario = factoryUsuario.Logueado;
@@ -47,6 +47,36 @@ angular.module('App.ApuestasCtrl', [])
     
 ServicioFirebase.EditarUser('usuario/' + $scope.usuario.nombre,$scope.usuario);
 
+/////////////////cargando apuesta en factory
+
+
+/*
+  $scope.cargandoDatos = [];
+
+$timeout(function() {
+ServicioFirebase.CargarDatos('/apuestas/')
+.on('child_added',function(snapshot)
+      {   
+
+
+$scope.cargandoDatos.push(snapshot.val());
+
+
+factoryApuestas.Apuestas=$scope.cargandoDatos;
+ 
+}
+)  
+});
+
+*/
+
+/////////////////
+
+
+
+
+
+
  $state.go('app.gallery');
 /*
         var user = firebase.auth().currentUser;
@@ -74,108 +104,25 @@ ServicioFirebase.EditarUser('usuario/' + $scope.usuario.nombre,$scope.usuario);
 
 
 
+.controller('controlGrillaApuesta', function($scope, $state, $timeout,factoryUsuario,factoryApuestas,ServicioFirebase) {
 
 
+  $scope.usuario = factoryUsuario.Logueado;
 
-.controller('DesafioVerCtrl', function($scope, $stateParams, $timeout, $state) {
-  var usuarioLogeado = firebase.auth().currentUser;
-  $scope.usuario = {};
-  $scope.mensaje = {};
-  $scope.mensaje.ver = false;
-  var referenciaUsuario = firebase.database().ref('usuario/' + usuarioLogeado.displayName);
-  referenciaUsuario.on('value', function(snapshot) {
-    $timeout(function() {
-      $scope.usuario = snapshot.val();
-    });
-  });
 
-  $scope.desafio = {};
-  $scope.desafio = JSON.parse($stateParams.desafio);
-  $scope.Aceptar = function(){
-      var updates = {};
-      updates['/desafio/' + $scope.desafio.titulo + '/aceptada'] = true;
-      updates['/desafio/' + $scope.desafio.titulo + '/usuarioAcepta'] = {nombre:$scope.usuario.nombre, correo:$scope.usuario.correo};
-      updates['/desafio/' + $scope.desafio.titulo + '/fechaAceptada'] = firebase.database.ServerValue.TIMESTAMP;
-      
-      firebase.database().ref().update(updates);
+  
+$scope.desafios = factoryApuestas.Apuestas;
 
-      firebase.database().ref('reserva/' + $scope.usuario.nombre + '/' + $scope.desafio.titulo).set({
-        usuario: $scope.usuario.nombre, monto: parseInt($scope.desafio.apuesta), vencido: false
-      });
+console.info('apuestas...', $scope.desafios);
+ 
+ 
 
-      $scope.mensaje.ver = true;
-      $scope.mensaje.mensaje = "Has aceptado la apuesta, suerte.";
-  }
+  $scope.NuevoDesafio = function(){
+//    $state.go('app.desafio');
+  };
 
-  $scope.Volver = function(){
-    console.info($scope.desafio);
-    if ($scope.desafio.pagina == "salaDesafios")
-      $state.go('app.salaDesafios');
-    else if ($scope.desafio.pagina == "misDesafios")
-      $state.go('app.misDesafios');
-  }
+  $scope.VerDesafio = function(desafio){
+  //  var param = JSON.stringify(desafio);
+    //$state.go('app.desafioVer', {desafio:param});
+  };
 })
-
-
-
-
-
-
-
-.controller('VerificarDesafiosCtrl', function($scope, $stateParams, $timeout, $state, ServicioFirebase) {
-  try
-  {
-    var usuarioLogeado = firebase.auth().currentUser;
-    $scope.usuario = {};
-    $scope.mensaje = {};
-    $scope.mensaje.ver = false;
-    var referenciaUsuario = firebase.database().ref('usuario/' + usuarioLogeado.displayName);
-    referenciaUsuario.on('value', function(snapshot) {
-      $timeout(function() {
-        $scope.usuario = snapshot.val();
-      });
-    });
-
-    $scope.desafio = {};
-    $scope.desafio = JSON.parse($stateParams.desafio);
-  }
-  catch(error)
-  {
-    console.info("Ha ocurrido un error en VerificarDesafiosCtrl. " + error);
-  }
-  $scope.Aceptar = function(eleccion){
-      var updateDesafio = {};
-      updateDesafio['/desafio/' + $scope.desafio.titulo + '/finalizada'] = true;
-      if (eleccion == 'empate')  
-      {
-        updateDesafio['/desafio/' + $scope.desafio.titulo + '/usuarioGanador'] = false;
-        updateDesafio['/desafio/' + $scope.desafio.titulo + '/empate'] = true;
-      }
-      else
-      {
-        updateDesafio['/desafio/' + $scope.desafio.titulo + '/usuarioGanador'] = eleccion;
-        updateDesafio['/desafio/' + $scope.desafio.titulo + '/empate'] = false;
-      }
-      
-      ServicioFirebase.Editar(updateDesafio);
-
-      var usuarioCreadorReserva = {};
-      usuarioCreadorReserva['/reserva/' + desafio.usuarioCreador.nombre + '/' + desafio.titulo + '/monto'] = 0;
-      usuarioCreadorReserva['/reserva/' + desafio.usuarioCreador.nombre + '/' + desafio.titulo + '/vencido'] = true;
-      
-      ServicioFirebase.Editar(usuarioCreadorReserva);
-
-      var usuarioAceptaReserva = {};
-      updateUsuarioReserva['/reserva/' + desafio.ususarioAcepta.nombre + '/' + desafio.titulo + '/monto'] = 0;
-      updateUsuarioReserva['/reserva/' + desafio.ususarioAcepta.nombre + '/' + desafio.titulo + '/vencido'] = true;
-      
-      ServicioFirebase.Editar(updateUsuarioReserva);
-
-      $scope.mensaje.ver = true;
-      $scope.mensaje.mensaje = "Has aceptado la apuesta, suerte.";
-  }
-
-  $scope.Volver = function(){
-    $state.go('app.verificarDesafios');
-  }
-});

@@ -8,6 +8,7 @@ angular.module('App', ['ionic',
 	'App.ApuestasCtrl',
 	'App.controladorUser',
 	'App.factoryUsuario', 
+	'App.factoryApuestas', 
 	'App.servicioFirebase',
 	'ngCordova', 
 	'ngAnimate'])
@@ -83,6 +84,21 @@ angular.module('App', ['ionic',
 	        })
 
 
+
+	.state('app.datos', {
+	       //     url: "/Trivia/:user",    // :user seria el parametro q necesitaria , pero lo hice global
+	            url: "/Datos",
+	          cache: false,
+            views: {
+                viewContent: {
+	            templateUrl: "templates/misDatos.html",
+	            controller: 'controlerDatos'
+	        }}})
+
+
+
+
+
 	.state('Contactame', {
 	            url: "/Contactame",
 	            templateUrl: "templates/datosMios.html",
@@ -124,6 +140,14 @@ angular.module('App', ['ionic',
 	            controller: 'controlApuesta'
 	        }}})
 
+	.state('app.grillaApuestas', {
+	            url: "/grillaApuestas", 
+	            cache: false,
+            views: {
+                viewContent: {
+	            templateUrl: "templates/grillaApuestas.html",
+	            controller: 'controlGrillaApuesta'
+	        }}})
 
 
 

@@ -6,9 +6,16 @@
         .module('App')
         .controller('AppController', AppController);
 
-    AppController.$inject = ['$scope', '$ionicPopover','$state'];
-    function AppController($scope, $ionicPopover,$state,$cordovaNativeAudio) {
-        
+    AppController.$inject = ['$scope', '$ionicPopover','$state','factoryUsuario','ServicioFirebase'];
+    function AppController($scope, $ionicPopover,$state,$cordovaNativeAudio,factoryUsuario,ServicioFirebase) {
+     
+
+
+    
+               
+
+          
+
         $scope.items = [
        
 			 { state: "Ola",
@@ -18,7 +25,11 @@
           	  },
 
 
-           
+           { state: "grillaApuestas",
+                color: "#D86B67",
+                icon: "ion-social-angular",
+                title: "Lista de Apuestas"
+            },
             { state: "Ola",
                 color: "#D86B67",
                 icon: "ion-social-angular",
@@ -34,6 +45,11 @@
                 icon: "ion-social-html5",
                 title: "Contactame"
             }
+
+
+
+
+
 
         ];
 //////////////////
@@ -77,6 +93,7 @@ $scope.juegos= [
             scope: $scope
         }).then(function (popover) {
             $scope.popover = popover;
+
         });
 
         $scope.abrirMenuIzq = function ($event) {
@@ -189,8 +206,8 @@ $scope.juegos= [
         .module('App')
         .controller('GalleryController', GalleryController);
 
-    GalleryController.$inject = ['$scope', '$state','factoryUsuario'];
-    function GalleryController($scope, $state,factoryUsuario) {
+    GalleryController.$inject = ['$scope', '$state','factoryUsuario','ServicioFirebase','$timeout','factoryApuestas'];
+    function GalleryController($scope, $state,factoryUsuario,ServicioFirebase,$timeout,factoryApuestas) {
 
             $scope.conectado=factoryUsuario.Logueado;
 
@@ -209,6 +226,87 @@ $scope.juegos= [
 					catch(e) {$state.go(item.state);}
 
         };
+    
+
+
+
+
+
+
+
+
+
+///////////////////cargando apuestas
+
+  $scope.cargandoDatos = [];
+
+ $timeout(function() {
+ServicioFirebase.CargarDatos('/apuestas/')
+.on('child_added',function(snapshot)
+      {    $timeout(function() {
+      var desafio = snapshot.val();
+
+
+      if (desafio.finalizada == false ) {
+        var fecha = new Date(desafio.fechaCreacion)
+        var fechaActual = new Date();
+        fecha.setHours(fecha.getHours() + desafio.vencimiento);
+        if (fecha > fechaActual)
+        { 
+                $scope.cargandoDatos.push(snapshot.val());
+
+
+        }
+    else
+        {
+        
+          var updateDesafio = {};
+          updateDesafio['/apuestas/' + desafio.titulo + '/finalizada'] = true;
+         
+          
+          firebase.database().ref().update(updateDesafio);
+
+     
+          
+        }
+      }
+
+
+})
+
+ 
+}
+)  
+});factoryApuestas.Apuestas=$scope.cargandoDatos;
+
+
+/////////////////////////fin cargando apuestas
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 })();
 (function () {
@@ -218,12 +316,10 @@ $scope.juegos= [
 		.module('App')
 		.controller('HomeController', HomeController);
 
-	HomeController.$inject = ['$scope', '$ionicPopup', 'Modals', 'Model','factoryUsuario'];
-	function HomeController($scope, $ionicPopup, Modals, Model,factoryUsuario) {
+	HomeController.$inject = ['$scope', '$ionicPopup', 'Modals', 'Model','factoryUsuario','factoryApuestas'];
+	function HomeController($scope, $ionicPopup, Modals, Model,factoryUsuario,factoryApuestas) {
 
 		$scope.users = [];
-
-        
 
 	$scope.userHome=factoryUsuario.Logueado;
 
@@ -251,6 +347,8 @@ $scope.juegos= [
 		
 		};
 		
+
+
 
 
 		//Center content

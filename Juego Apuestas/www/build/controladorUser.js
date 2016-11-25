@@ -1,6 +1,6 @@
 angular.module('App.controladorUser', [])
 
-.controller('LoginCtrl', function($scope, $stateParams, $timeout, $state,$ionicPopup, ServicioFirebase,factoryUsuario) {
+.controller('LoginCtrl', function($scope, $stateParams, $timeout, $state,$ionicPopup, factoryApuestas,ServicioFirebase,factoryUsuario) {
  
 
   $scope.usuario = {};
@@ -40,7 +40,7 @@ $timeout(function() {
 ServicioFirebase.CargarDatos('/usuario/')
 .on('child_added',function(snapshot)
       {   
-        
+
             if(snapshot.val().nombre == user.displayName)
                {
                  $scope.usuario.perfil=snapshot.val().perfil;
@@ -76,6 +76,37 @@ ServicioFirebase.CargarDatos('/usuario/')
       factoryUsuario.Logueado=$scope.usuario;
 
           console.info("factory",factoryUsuario);
+
+
+//cargando apuestas
+
+
+/*
+
+  $scope.cargandoDatos = [];
+
+$timeout(function() {
+ServicioFirebase.CargarDatos('/apuestas/')
+.on('child_added',function(snapshot)
+      {   
+
+
+$scope.cargandoDatos.push(snapshot.val());
+
+
+factoryApuestas.Apuestas=$scope.cargandoDatos;
+ 
+}
+)  
+});
+
+*/
+
+////
+
+
+
+
 
 
 
@@ -277,3 +308,15 @@ $scope.usuario.pass = '123456';
 
   };
 })
+
+
+
+.controller('controlerDatos', function($scope, $stateParams, $timeout, $state,$ionicPopup, factoryUsuario,ServicioFirebase) {
+   $scope.usuario = {};
+
+$scope.usuario= factoryUsuario.Logueado;
+
+
+
+
+   })
