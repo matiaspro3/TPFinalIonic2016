@@ -1,0 +1,54 @@
+<ion-view view-title="Desafío: {{desafio.titulo}}" ng-style={'background-color':'black'}>
+  <ion-content >
+  	<div class="list">
+		<label class="item item-input item-stacked-label">
+			<span style="color:green; font-weight: 900" class="input-label">Descripción</span>
+			<span style="color:red; font-weight: 900">{{desafio.descripcion}}</span>
+		</label>
+		<label class="item item-input item-stacked-label">
+			<span style="color:green; font-weight: 900" class="input-label">Apuesta</span>
+			<span style="color:red; font-weight: 900" >{{desafio.apuesta}}</span>
+		</label>
+		<label class="item item-input item-stacked-label">
+			<span style="color:green; font-weight: 900"class="input-label">Finaliza en:<span style="font-size:10px">(hs)</span></span>
+			<span style="color:red; font-weight: 900">{{desafio.vencimiento}}</span>
+		</label>
+		<label class="item item-input item-stacked-label">
+			<span style="color:green; font-weight: 900" class="input-label">Creador:</span>
+			<span style="color:red; font-weight: 900">{{desafio.usuarioCreador.nombre}}</span>
+		</label>
+
+
+		<label ng-if="desafio.usuarioAcepta.nombre" class="item item-input item-stacked-label">
+			<span style="color:green	; font-weight: 900"  class="input-label">Desafiante:</span>
+			<span style="color:red; font-weight: 900" >{{desafio.usuarioAcepta.nombre}}</span>
+		</label>
+
+
+		<div class="padding">
+			<div class="button-bar">
+				<button class="button button-balanced" style="margin-right:2%" ng-click="Aceptar()" ng-if="(!desafio.aceptada) && (usuario.nombre != desafio.usuarioCreador.nombre)">Aceptar</button>
+			
+			</div>
+		</div>
+
+  <div class="button-bar">
+<button class="button button-icon icon ion-magnet"  style="color:lightblue" nav-clear menu-close nav-direction="exit"  ui-sref="app.grillaApuestas()">Volver</button>
+
+
+<button class="button button-icon icon ion-log-out"  style="color:lightblue" nav-clear menu-close nav-direction="exit"  ui-sref="app.gallery()">Menu</button>
+
+
+
+ </div>
+
+
+
+
+
+		<div class="padding" ng-if="mensaje.ver">
+			<span class="input-label" style="width:100%">{{mensaje.mensaje}}</span>
+		</div>
+	</div>
+  </ion-content>
+</ion-view>

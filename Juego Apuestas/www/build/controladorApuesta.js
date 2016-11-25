@@ -1,24 +1,22 @@
 angular.module('App.ApuestasCtrl', [])
 
-.controller('controlApuesta', function($scope, $stateParams, $timeout, $state, ServicioFirebase,factoryUsuario,factoryApuestas) {
+.controller('controlApuesta', function($scope, $ionicPopup,$stateParams, $timeout, $state, ServicioFirebase,factoryUsuario,factoryApuestas) {
     $scope.desafio = {};
 
  $scope.usuario = factoryUsuario.Logueado;
+
  console.info("user logueado en apuesta...",$scope.usuario);
 
 
-  try
-    {
+  
         $scope.usuario = factoryUsuario.Logueado;
 
     $scope.desafio = {};
-    $scope.desafio.apuesta = 10;
-    $scope.desafio.vencimiento = 1;
-  }
-  catch(error)
-  {
-    console.info("Ha ocurrido un error en controlApuesta. " + error);
-  }
+   // $scope.desafio.apuesta = 10;
+   // $scope.desafio.vencimiento = 1;
+ 
+  
+  
 
 
 
@@ -97,6 +95,17 @@ factoryApuestas.Apuestas=$scope.cargandoDatos;
     catch(error)
     {
       console.info("Ha ocurrido un error al Guardar un desafio. " + error);
+
+      var alertPopup = $ionicPopup.alert({
+         title: "NOOO ingrese simbolos como el PUNTO. "
+      });
+      alertPopup.then(function(res) { 
+         
+
+      });
+
+
+
     }
   }
 })
@@ -111,18 +120,59 @@ factoryApuestas.Apuestas=$scope.cargandoDatos;
 
 
   
+
+
+
+
 $scope.desafios = factoryApuestas.Apuestas;
 
 console.info('apuestas...', $scope.desafios);
  
+
+
+
  
 
   $scope.NuevoDesafio = function(){
-//    $state.go('app.desafio');
+    $state.go('app.apostar');
   };
 
-  $scope.VerDesafio = function(desafio){
-  //  var param = JSON.stringify(desafio);
-    //$state.go('app.desafioVer', {desafio:param});
+  $scope.VerDesafio = function(apt){
+   var param = JSON.stringify(apt);
+    $state.go('app.verApuesta', {apuesta:param});
   };
+
+
+
+})
+
+
+
+
+
+.controller('controlVerApuesta', function($scope, $stateParams, $timeout, $state,factoryUsuario) {
+  
+  $scope.usuario = factoryUsuario.Logueado;
+$scope.mensaje = {};
+
+  $scope.desafio = {};
+  $scope.desafio = JSON.parse($stateParams.apuesta);
+
+
+
+  $scope.Aceptar = function(){
+      var updates = {};
+      updates['/apuestas/' + $scope.desafio.titulo + '/aceptada'] = true;
+      updates['/apuestas/' + $scope.desafio.titulo + '/usuarioAcepta'] = {nombre:$scope.usuario.nombre, correo:$scope.usuario.email};
+    
+      
+      firebase.database().ref().update(updates);
+
+     
+
+      $scope.mensaje.ver = true;
+      $scope.mensaje.mensaje = "Apuesta Aceptada.";
+       $state.go('app.gallery');
+  }
+
 })

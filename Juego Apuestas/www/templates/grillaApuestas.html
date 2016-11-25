@@ -6,21 +6,24 @@
 ng-click="NuevoDesafio()
 -->
  
-      <ion-item ng-repeat="desafio in desafios">
+      <ion-item ng-repeat="desafio in desafios  | orderBy:'-fechaCreacion'" ng-click="VerDesafio({{desafio}})">
 
 
 
 
         <h4>{{desafio.titulo}}</h4>
         <p>{{desafio.descripcion}}</p>
-
+        <h4>Fecha : {{desafio.fechaCreacion |  date:'dd-MM-yyyy'}}</h4>
+        <h4>Hora Inicio:  {{desafio.fechaCreacion |  date:'HH:mm:ss'}}</h4>
+        <p>Duracion Total : {{desafio.vencimiento}} Hs.</p>
+   
       </ion-item>
     </ion-list>
 
+ 
 
+ <button class="button button-royal" id="vende" ng-click="NuevoDesafio()">Nuevo Desafio</button>
 
-
-  	<button class="btn-nuevoDesafio" "><i class="fa fa-plus fa-2x"></i></button>
 
 
 

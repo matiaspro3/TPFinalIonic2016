@@ -150,6 +150,14 @@ angular.module('App', ['ionic',
 	        }}})
 
 
+.state('app.verApuesta', {
+	            url: "/verApuesta:apuesta'", 
+	            cache: false,
+            views: {
+                viewContent: {
+	            templateUrl: "templates/apuestaVer.html",
+	            controller: 'controlVerApuesta'
+	        }}})
 
 
 

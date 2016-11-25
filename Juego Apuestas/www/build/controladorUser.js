@@ -2,13 +2,25 @@ angular.module('App.controladorUser', [])
 
 .controller('LoginCtrl', function($scope, $stateParams, $timeout, $state,$ionicPopup, factoryApuestas,ServicioFirebase,factoryUsuario) {
  
-
   $scope.usuario = {};
-  $scope.usuario.email = 'matiasjds87@gmail.com';
-  $scope.usuario.pass = '123456';
+
+
+$scope.Test=function(para)
+{
+$scope.usuario.email = para+ "@gmail.com";
+$scope.usuario.pass = '123456';
+
+};
+
+
+
+
     $scope.mensajeLogin = {};
   $scope.mensajeLogin.ver = false;
   
+
+
+
 
 if (!factoryUsuario.Logueado)
       $scope.logueado = 'no';
@@ -298,6 +310,7 @@ $scope.usuario.pass = '123456';
       $scope.mensajeLogin.ver = true;
       $scope.mensajeLogin.estilo = "alert-danger";
       console.info("Ha ocurrido un error en Registrar(). " + error);
+      
        var alertPopup = $ionicPopup.alert({
          title: $scope.mensajeLogin.mensaje
       });
