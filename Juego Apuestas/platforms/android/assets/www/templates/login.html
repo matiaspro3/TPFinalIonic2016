@@ -1,21 +1,73 @@
-<ion-view view-title="Registrate para disfrutar de los juegos!" ng-init="fAdmi = 'img/homerlike.png'"  ng-style={'background-color':'black'} >
+<ion-view view-title="Inicia sesion disfrutar de los juegos!" ng-init="fAdmi = 'img/homerlike.png'"  ng-style={'background-color':'black'} >
   <ion-content class="padding">
-	<label class="item item-input">
-	  <span class="input-label">Nombre:</span>
-	  <input type="text" ng-model="usuario.nombre">
-	</label>
-	<br>
-	<ion-button class="button button-full button-positive" ng-click="login()">
-	Loguiate para jugar!
-	</ion-button>
+
+<div class="list" ng-if="logueado == 'no'">
+        <label class="item item-input">
+          <span class="input-label">Correo</span>
+          <input type="text" ng-model='usuario.email'>
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Contraseña</span>
+          <input type="password" ng-model="usuario.pass">
+        </label>
+        <br>
+        <div class="padding" ng-show="!cargando">
+	        <ion-button ng-show=usuario.email class="button button-full button-positive" ng-click="login()">
+			Loguiate para jugar!
+			</ion-button>
+      
+          <p class="text-center text-muted">
+            <small><a ui-sref="registro()">Registrate</a></small>
+          </p>
+        </div>
+<div class="padding">
+ <div class="overlay" style="text-align :center; color: red;" ng-show="cargando" >
+      <div class="overlayContent">
+        <ion-spinner icon="circles"></ion-spinner><span style="font-size:36px; color:red">Ingresando..</span>
+      </div>
+    </div>
+</div >
+
+ <div class="padding">
+         <button class="button button-block button-royal" ng-click="Test('matiasjds87')" >Usuario 1</button>
+        </div> <div class="padding">
+         <button class="button button-block button-royal" ng-click="Test('algo1')" >Usuario 2</button>
+        </div>
 
 
-  <div class="button-bar" ng-model=usuario.nombre>
-<button class="button button-icon icon ion-magnet"  ng-show=usuario.nombre  style="color:lightblue" nav-clear menu-close nav-direction="exit" ui-sref="app.gallery">Menu</button>
- <button class="button button-icon icon ion-home"  style="color:blue" nav-clear menu-close nav-direction="exit" ui-sref="home">Inicio</button>
+
+        <div class="padding">
+          <div class="{{mensajeLogin.estilo}}" ng-if="mensajeLogin.ver" style="text-align:center">
+            <span class="input-label" style="font-size: 16px; width: 100%; max-width: 100%;">{{mensajeLogin.mensaje}}</span>
+          </div>
+        </div>
+
+      </div>
+
+
+
+
+      <div class="list" ng-if="logueado == 'si'">
+        <div class="padding">
+             
+          <button class="button button-block button-positive" ng-click="Deslogear()" >Desloguearse</button>
+        </div>
+      </div>
+
+
+
+
+
+
+
+<div class="button-bar">
+
+ <button class="button button-icon icon ion-home" ng-if="logueado == 'no'" style="color:blue" nav-clear menu-close nav-direction="exit" ui-sref="home">Inicio</button>
+<button class="button button-icon icon ion-magnet"  ng-if="logueado == 'si'" style="color:lightblue" nav-clear menu-close nav-direction="exit" ui-sref="app.gallery">Menu</button>
+
  <button class="button button-icon icon ion-log-out" style="color: coral" on-tap="exitApp()">Salir</button>
- </div>
 
+ </div>
 
 
   </ion-content>

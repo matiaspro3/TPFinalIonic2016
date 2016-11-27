@@ -24,14 +24,46 @@
     -->
         <script src="cordova.js"></script>
     <!-- your app's js -->
-    <script src="build/app.js"></script> 
-        <script src="build/controladores.js"></script>
+       <script src="build/app.js"></script> 
+        <script src="build/controladorUser.js"></script>
+           <script src="build/controladorApuesta.js"></script>
+        
+        <script src="build/controladoresMenues.js"></script>
+        <!-- servicios -->
+        <script src="build/servicios/servicioFirebase.js"></script>
+
+        <!-- factory -->
+        <script src="build/factory/factoryUser.js"></script>
+
+<script src="build/factory/factoryApuestas.js"></script>
+
+        <!-- filtro -->
+        <script src="build/filtro/filtros.js"></script>
+
+
+
 
 
 
     <!-- Firebase -->
-        <script src="https://cdn.firebase.com/js/client/2.2.4/firebase.js"></script>
-   
+         <!--<script src="https://cdn.firebase.com/js/client/2.2.4/firebase.js"></script>
+-->
+
+<script src="https://www.gstatic.com/firebasejs/3.6.1/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyBE5N8j9Q_uwSatoAZSEkjR7xejw7xAXJs",
+    authDomain: "apuestas-e2c84.firebaseapp.com",
+    databaseURL: "https://apuestas-e2c84.firebaseio.com",
+    storageBucket: "apuestas-e2c84.appspot.com",
+    messagingSenderId: "154246031239"
+  };
+  firebase.initializeApp(config);
+</script>
+ 
+
+
      <!-- AngularFire -->
       <script src="https://cdn.firebase.com/libs/angularfire/1.2.0/angularfire.min.js"></script>
 

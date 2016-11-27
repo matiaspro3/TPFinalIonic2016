@@ -1,0 +1,34 @@
+<ion-view view-title="Listado de Apuestas" ng-style={'background-color':'black'} >
+  <ion-content>
+    <ion-list>
+   <!--
+      <ion-item ng-repeat="desafio in desafios" ng-click="VerDesafio({{desafio}})">
+ng-click="NuevoDesafio()
+-->
+ <button class="button button-royal"   ng-if='!volver' ng-click="DesaFin()">Ver Desafios Finalizados</button> 
+  <button class="button button-royal"  ng-if='volver' ng-click="DesaHoy()">Ver Desafios Actuales</button> 
+
+      <ion-item ng-repeat="desafio in desafios  | orderBy:'-fechaCreacion'" ng-click="VerDesafio({{desafio}})" ng-if=' desafio.usuarioCreador.nombre ==  usuario.nombre'>
+
+
+
+
+        <h4>{{desafio.titulo}}</h4>
+        <p>{{desafio.descripcion}}</p>
+        <h4>Fecha : {{desafio.fechaCreacion |  date:'dd-MM-yyyy'}}</h4>
+        <h4>Hora Inicio:  {{desafio.fechaCreacion |  date:'HH:mm:ss'}}</h4>
+        <p>Duracion Total : {{desafio.vencimiento}} Hs.</p>
+        <p ng-if='!desafio.finalizada'>{{desafio.aceptada | filtroTrue}}</p>
+   
+      </ion-item>
+    </ion-list>
+
+ 
+
+ <button class="button button-royal" id="vende" ng-click="NuevoDesafio()">Nuevo Desafio</button>
+
+
+
+
+  </ion-content>
+</ion-view>
