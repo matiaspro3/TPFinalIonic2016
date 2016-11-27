@@ -7,16 +7,14 @@
 <br>
 <br>		
 
-<img src="Juego Apuestas/www/img/apuestas.jpg" align="left" />
-<br>	
 <br>	
 
 
-* ID  IONIC......XXXXXXXXXX....
+* ID  IONIC...... 6cafd5c3  ....
 
 <br>	
 
-* [FIREBASE](https://XXXXXXXXXXXcom/)
+* [FIREBASE](https://apuestas-e2c84.firebaseapp.com)
 
 <br>	
 <br>	
