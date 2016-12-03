@@ -1,8 +1,7 @@
 angular.module('App.ApuestasCtrl', [])
 
 .controller('controlApuesta', function($scope, $ionicPopup,$stateParams, $timeout, $state, ServicioFirebase,factoryUsuario,factoryApuestas) {
-    $scope.desafio = {};
-
+   
  $scope.usuario = factoryUsuario.Logueado;
 
  console.info("user logueado en apuesta...",$scope.usuario);
@@ -15,7 +14,8 @@ angular.module('App.ApuestasCtrl', [])
    // $scope.desafio.apuesta = 10;
    // $scope.desafio.vencimiento = 1;
  
-  
+  $scope.desafio.apuesta=10;
+  $scope.desafio.vencimiento=10;
   
 
 
@@ -184,7 +184,7 @@ console.log($scope.usuario.nombre);
       updates['/apuestas/' + $scope.desafio.titulo + '/aceptada'] = true;
       updates['/apuestas/' + $scope.desafio.titulo + '/apuesta'] = $scope.desafio.apuesta*2;
       updates['/apuestas/' + $scope.desafio.titulo + '/usuarioAcepta'] = {nombre:$scope.usuario.nombre, correo:$scope.usuario.email};
-      updates['/usuario/'  + $scope.usuario.nombre + '/saldo'] = $scope.usuario.saldo - $scope.desafio.apuesta;
+      updates['/usuario/'  + $scope.usuario.nombre + '/saldo'] = parseInt($scope.usuario.saldo) - parseInt($scope.desafio.apuesta);
 
 
       firebase.database().ref().update(updates);
@@ -193,6 +193,25 @@ console.log($scope.usuario.nombre);
       $scope.mensaje.mensaje = "Apuesta Aceptada.";
        $state.go('app.gallery');
   }
+
+
+/////terminar apuesta
+
+ $scope.Finalizar = function(){
+      var updates = {};
+      updates['/apuestas/' + $scope.desafio.titulo + '/finalizada'] = true;
+      updates['/usuario/'  + $scope.usuario.nombre + '/saldo'] =parseInt($scope.usuario.saldo) + parseInt($scope.desafio.apuesta);
+
+
+      firebase.database().ref().update(updates);
+
+           $scope.mensaje.ver = true;
+      $scope.mensaje.mensaje = "GANASTE!!!!.";
+       $state.go('app.gallery');
+  }
+/////terminar apuesta finn
+
+
 
  
 ////////////tiempoooo

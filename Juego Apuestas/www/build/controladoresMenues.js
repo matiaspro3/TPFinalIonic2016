@@ -208,8 +208,8 @@ $scope.juegos= [
         .module('App')
         .controller('GalleryController', GalleryController);
 
-    GalleryController.$inject = ['$scope', '$state','factoryUsuario','ServicioFirebase','$timeout','factoryApuestas'];
-    function GalleryController($scope, $state,factoryUsuario,ServicioFirebase,$timeout,factoryApuestas) {
+    GalleryController.$inject = ['$scope','Modals','Model', '$state','factoryUsuario','ServicioFirebase','$timeout','factoryApuestas'];
+    function GalleryController($scope, Modals,Model,$state,factoryUsuario,ServicioFirebase,$timeout,factoryApuestas) {
 
             $scope.conectado=factoryUsuario.Logueado;
 
@@ -231,15 +231,8 @@ $scope.juegos= [
     
 
 
-
-
-
-
-
-
-
 ///////////////////cargando apuestas
-
+$scope.usuariosRanking = [];
   $scope.cargandoDatos = [];
   $scope.cargandoDatosAYER = [];
   $scope.usuarioGanador = {};
@@ -290,7 +283,7 @@ console.log(desafio.titulo +'...' + days + " days, " + hours + " hours, " + minu
 */
 ServicioFirebase.CargarDatos('/usuario/')
 .on('child_added',function(snapshot)
-      {   
+      {       
 
             if(snapshot.val().nombre == desafio.usuarioCreador.nombre)
                {
@@ -298,11 +291,6 @@ ServicioFirebase.CargarDatos('/usuario/')
               }
 
 });
-
-
-
-
-
 
 //para probar si carga bien los datos mas rapido le cambio el hours por min
 if (days>0 || hours>=desafio.vencimiento)
@@ -331,7 +319,12 @@ else {
  
 }
 )  
-});factoryApuestas.Apuestas=$scope.cargandoDatos;
+});
+
+
+
+
+ factoryApuestas.Apuestas=$scope.cargandoDatos;
 factoryApuestas.ApuestasAyer=$scope.cargandoDatosAYER;
 //console.info('ayer',factoryApuestas.ApuestasAyer);
 //console.info('hoy',factoryApuestas.Apuestas);
@@ -341,15 +334,23 @@ factoryApuestas.ApuestasAyer=$scope.cargandoDatosAYER;
 
 
 
+ServicioFirebase.CargarDatos('/usuario/')
+.on('child_added',function(snapshot)
+      {              $scope.usuariosRanking.push(snapshot.val());
+
+});
 
 
 
+$scope.mostrarRankin = function () {
+   console.info('uusuariosRanking.....',$scope.usuariosRanking);
+            Modals.openModal($scope, 'templates/modals/users.html', 'animated rotateInDownLeft');
+        }
 
-
-
-
-
-
+$scope.closeModal = function () {
+            Modals.closeModal();
+           // $scope.users = [];        
+        }
 
 
 
@@ -390,7 +391,7 @@ factoryApuestas.ApuestasAyer=$scope.cargandoDatosAYER;
      		cssClass: 'animated bounceInDown'
 			});
 		};
-		
+		/*
 		$scope.mostrarRankin = function () {
 			Model.Users.getAll().then(function (users) {
 				$scope.users = angular.copy(users);
@@ -403,7 +404,7 @@ factoryApuestas.ApuestasAyer=$scope.cargandoDatosAYER;
 			$scope.users = [];
 		
 		};
-		
+		*/
 
 
 

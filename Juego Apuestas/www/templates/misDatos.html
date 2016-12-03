@@ -9,6 +9,48 @@
     <img ng-src="{{fAdmi}}">
     <h3 style="font-size:1em;color:green;font-weight: 900;">Email: {{usuario.email}}</h3>
     <h3 style="font-size:1em;color:red;font-weight: 900;">Creditos : {{usuario.saldo}}</h3>
+<br><br>
+
+<div ng-if ="usuario.perfil !='admin'">
+ <button class="button button-dark" id="vende" ng-if="mostrar" ng-click ="Cargar()">Solicitar Creditos al Administrador</button>
+
+
+
+<button class="button button-dark" id="vende" ng-if="creditos" ng-click ="CargarPlata(10)">Solicitar  10 Creditos </button>
+<button class="button button-dark" id="vende" ng-if="creditos" ng-click ="CargarPlata(100)">Solicitar 100  Creditos</button>
+ <button class="button button-dark" id="vende" ng-if="creditos" ng-click ="CargarPlata(250)">Solicitar 250 Creditos</button>
+
+<button class="button button-dark" id="vende" ng-if="mjsFin">En cuanto se apruebe tu pedido se te acreditara automaticamente</button>
+</div>
+
+
+<div ng-if ="usuario.perfil =='admin' && tablaCreditos">
+
+
+
+
+
+        <div style="color:blue;font-weight: 900;" class="row header">
+          <div class="col">Usuario</div>
+          <div class="col">Saldo Actual</div>
+          <div class="col">Creditos Solicitados</div>
+          <div class="col"></div>
+        </div>
+        <div  style="color:red;font-weight: 900;"  class="row" ng-repeat="user in usuariosCreditos">
+          <div class="col">{{user.nombre}}</div>
+          <div class="col">{{user.saldo}}</div>
+          <div class="col">{{user.cargas}}</div>
+          <div class="col"><button class="btn btn-info" ng-click="Aprobar(user)">Aprobar</button></div>
+        </div>
+
+
+
+</div>
+<label ng-if ="usuario.perfil == 'admin' && !tablaCreditos" style="color:blue;font-weight: 900;"">Todos los Creditos Cargados! </label>
+
+
+
+
 
 </center>
 

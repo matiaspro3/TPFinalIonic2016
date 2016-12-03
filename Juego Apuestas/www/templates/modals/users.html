@@ -1,4 +1,4 @@
-<ion-modal-view class="usersModal bigModal">
+<ion-modal-view style="background-color:black;"  class="usersModal bigModal">
 <ion-header-bar>
 <h1 class="title">Ranking de Usuarios</h1>
 <button class="button button-dark icon ion-close-round" ng-click="closeModal();">
@@ -7,7 +7,7 @@
 </ion-header-bar>
 <ion-content>
 <ion-list can-swipe="true">
-<ion-item ng-repeat="user in users" class="animate-item">{{user.apodo}}</ion-item>
+<ion-item ng-repeat="user in usuariosRanking | orderBy:'-saldo' " class="animate-item">{{user.nombre}}...Puntos...{{user.saldo}}</ion-item>
 </ion-list>
 </ion-content>
 </ion-modal-view>
