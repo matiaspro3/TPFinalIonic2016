@@ -33,7 +33,7 @@
         <param name="onload" value="true" />
     </feature>
     <allow-navigation href="cdvfile:*" />
-    <name>$Pract$Sup$</name>
+    <name>Pract$Sup</name>
     <description>
     La Mejor Aplicacion de todas!
   </description>

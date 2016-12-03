@@ -56,7 +56,8 @@ ServicioFirebase.CargarDatos('/usuario/')
             if(snapshot.val().nombre == user.displayName)
                {
                  $scope.usuario.perfil=snapshot.val().perfil;
-                    $scope.usuario.saldo=snapshot.val().saldo;
+                 $scope.usuario.saldo=snapshot.val().saldo;
+                   $scope.usuario.cargas=snapshot.val().cargas;
               }
 
 
@@ -326,8 +327,89 @@ $scope.usuario.pass = '123456';
 
 .controller('controlerDatos', function($scope, $stateParams, $timeout, $state,$ionicPopup, factoryUsuario,ServicioFirebase) {
    $scope.usuario = {};
+   $scope.mostrar=true;
+   $scope.mjsFin=false;
+   $scope.creditos= false;
+       $scope.tablaCreditos=false;
+$scope.usuariosCreditos=[];
 
 $scope.usuario= factoryUsuario.Logueado;
+
+console.info('$scope.usuario.....!!!',$scope.usuario);
+
+$scope.Cargar=function()
+{
+$scope.mostrar=false;
+   $scope.creditos= true;
+}
+
+
+$scope.CargarPlata=function(credito)
+{  console.info(credito);
+
+
+
+          var updateCreditos = {};
+        
+          updateCreditos['/usuario/' + $scope.usuario.nombre + '/cargas'] = $scope.usuario.cargas + credito;                         
+          firebase.database().ref().update(updateCreditos);
+ 
+
+  $scope.creditos= false;
+  $scope.mjsFin=true;
+
+
+}
+
+
+
+
+
+
+ServicioFirebase.CargarDatos('/usuario/')
+.on('child_added',function(snapshot)
+      {       
+  if(snapshot.val().cargas != 0)
+               {
+                $scope.tablaCreditos=true;
+       $scope.usuariosCreditos.push(snapshot.val());
+              }
+
+                                  
+
+                        $scope.Aprobar= function(usuario)
+                        {
+
+                                  var updateCreditos = {};
+                                
+                                  updateCreditos['/usuario/' + usuario.nombre + '/cargas'] = 0;                         
+                                  updateCreditos['/usuario/' + usuario.nombre + '/saldo'] = usuario.saldo + usuario.cargas ;                         
+                                  firebase.database().ref().update(updateCreditos);
+                                      $scope.tablaCreditos=false;
+
+
+                                                                            ServicioFirebase.CargarDatos('/usuario/')
+                                                                                                      .on('child_added',function(snapshot)
+                                                                                                            {       
+                                                                                                        if(snapshot.val().cargas != 0)
+                                                                                                                     {
+                                                                                                                      $scope.tablaCreditos=true;
+                                                                                                             $scope.usuariosCreditos.push(snapshot.val());
+                                                                                                                    }                                              
+
+                                                                                  
+                                                                            });
+
+                                                                       
+
+
+                        }
+
+});
+
+
+
+
 
 
 
