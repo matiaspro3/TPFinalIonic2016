@@ -550,6 +550,10 @@ on {
   font-size: 7em;
   color: white; }
 
+.homeView h2 {
+  font-size: 3em;
+  color: white; }
+
 .homeView button {
   font-size: 26px; }
 

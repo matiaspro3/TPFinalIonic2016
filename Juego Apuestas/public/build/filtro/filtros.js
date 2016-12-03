@@ -2,7 +2,7 @@ angular.module('App.filtros', [])
  .filter('filtroTrue', function () {
    return function (input) {
         if (!input)
-        return 'Apuesta YA!!!';
+        return 'Apuesta disponible!!!';
     return 'Apuesta Aceptada!!';
     }
 

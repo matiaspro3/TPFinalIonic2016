@@ -26,12 +26,12 @@
 
 
 		<label class="item item-input item-stacked-label">
-			<span style="color:green; font-weight: 900" class="input-label">Tiempo Transcurrido:</span>
+			<span style="color:green; font-weight: 900" class="input-label">T. Transcurrido:</span>
 			<span style="color:red; font-weight: 900">{{tiempo}}</span>
 		</label>
 
 		<label class="item item-input item-stacked-label">
-			<span style="color:green; font-weight: 900" class="input-label">Tiempo Limite:<span style="font-size:10px">(hs)</span></span>
+			<span style="color:green; font-weight: 900" class="input-label">T. Limite:<span style="font-size:10px">(hs)</span></span>
 			<span style="color:red; font-weight: 900">{{desafio.vencimiento}}</span>
 		</label>
 
@@ -59,6 +59,10 @@
 
 
 <button class="button button-icon icon ion-log-out"  style="color:lightblue" nav-clear menu-close nav-direction="exit"  ui-sref="app.gallery()">Menu</button>
+
+
+
+ <button   ng-if="desafio.usuarioCreador.nombre == usuario.nombre" class="button button-dark" id="vende" ng-if="creditos" ng-click ="Finalizar()">Terminar Desafio</button>
 
 
 
